@@ -18,70 +18,73 @@ switch ($page) {
 
     // CLIENT
     case 'home':
-        include "layouts/header.php";
-        include "page/client/home.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/home.php";
+        include "view/layouts/footer.php";
         break;
 
     case 'about':
-        include "layouts/header.php";
-        include "page/client/about.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/about.php";
+        include "view/layouts/footer.php";
         break;
 
     case 'contact':
-        include "layouts/header.php";
-        include "page/client/contact.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/contact.php";
+        include "view/layouts/footer.php";
         break;
 
     case 'product':
-        include "layouts/header.php";
-        include "page/client/product.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/product.php";
+        include "view/layouts/footer.php";
         break;
     case 'menu':
-        include "layouts/header.php";
-        include "page/client/menu.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/menu.php";
+        include "view/layouts/footer.php";
         break;
     case 'productdetail':
-        include "layouts/header.php";
-        include "page/client/productDetail.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/productDetail.php";
+        include "view/layouts/footer.php";
         break;
     case 'cart':
-        include "funtion/cart.php";
-        include "layouts/header.php";
-        include "page/client/cart.php";
-        include "layouts/footer.php";
+        include "view/function/cart.php";
+        include "view/layouts/header.php";
+        include "view/page/client/cart.php";
+        include "view/layouts/footer.php";
         break;
     case 'login':
-        include "layouts/header.php";
-        include "page/client/login.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/login.php";
+        include "view/layouts/footer.php";
         break;
     case 'register':
-        include "layouts/header.php";
-        include "page/client/register.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/register.php";
+        include "view/layouts/footer.php";
         break;
     case 'profile':
-        include "layouts/header.php";
-        include "page/client/profile.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/profile.php";
+        include "view/layouts/footer.php";
         break;
     case 'order':
-        include "layouts/header.php";
-        include "page/client/order.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/order.php";
+        include "view/layouts/footer.php";
         break;
     case 'order-success':
-        include "layouts/header.php";
-        include "page/client/order-success.php";
-        include "layouts/footer.php";
+        include "view/layouts/header.php";
+        include "view/page/client/order-success.php";
+        include "view/layouts/footer.php";
         break;
-
+    
+    case 'admin':
+        include "view/page/admin/home.php";
+        break;
     default:
         echo "<h1>404</h1>";
 }
