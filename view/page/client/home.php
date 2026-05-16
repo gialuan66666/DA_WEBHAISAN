@@ -1,128 +1,87 @@
-<div class="cc-home-wrapper">
+<?php
+$pageTitle = 'SeaFresh - Trang chủ';
+require_once './data/data.php';
+require_once './view/layouts/client/header.php';
+?>
 
-    <div class="cc-hero">
-
-        <!-- SLIDER -->
-        <div class="cc-hero-slides">
-            <div class="cc-hero-slide active" style="background-image: url('/assets/img/banner1.jpg')"></div>
-            <div class="cc-hero-slide" style="background-image: url('/assets/img/banner2.jpg')"></div>
-            <div class="cc-hero-slide" style="background-image: url('/assets/img/banner3.jpg')"></div>
-        </div>
-
-        <!-- OVERLAY + TEXT -->
-        <div class="cc-hero-overlay">
-            <div class="cc-hero-content">
-                <span>Về chúng tôi</span>
-                <h2>CÔNG TY CỔ PHẦN CHACHA</h2>
-                <p>
-                    Trà sữa Chacha là một trong những thương hiệu trà sữa nổi bật
-                    với sản phẩm chất lượng, sáng tạo và giá cả hợp lý.
-                </p>
-                <a href="/about" class="cc-hero-btn">TÌM HIỂU THÊM</a>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- CATEGORY -->
-    <div class="container cc-home-category">
-        <h4 class="text-center mb-4">Danh mục nổi bật</h4>
-
-        <div class="row text-center">
-            <div class="col-md-3">
-                <div class="cc-home-cat">
-                    <img src="/assets/img/TS-Dao-PM-Dao.png">
-                    <p>Trà sữa</p>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-cat">
-                    <img src="/assets/img/tiramisu.png">
-                    <p>Tiramisu</p>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-cat">
-                    <img src="/assets/img/ts-matcha-kem-trung-khe-.png">
-                    <p>Matcha</p>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-cat">
-                    <img src="/assets/img/tra-sua-socola.png">
-                    <p>Socola</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- BANNER -->
+<section class="hero-section">
     <div class="container">
-        <img src="/assets/img/menu2.jpg" class="cc-home-banner">
-    </div>
-
-    <!-- PRODUCT -->
-    <div class="container cc-home-product">
-        <h4 class="text-center mb-4">Sản phẩm nổi bật</h4>
-
-        <div class="row">
-
-            <div class="col-md-3">
-                <div class="cc-home-card">
-                    <img src="/assets/img/TS-Dao-PM-Dao.png">
-                    <p>Trà sữa đào</p>
-                    <div class="cc-home-price">35.000đ</div>
-                    <button>Thêm vào giỏ</button>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="hero-badge">Tươi ngon từ biển Việt Nam</span>
+                <h1>Hải Sản Tươi Sống Đánh Bắt Trong Ngày</h1>
+                <p>Từ tàu đánh bắt đến bàn ăn của bạn trong thời gian ngắn nhất. Cam kết tươi, sạch, rõ nguồn gốc.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="/product" class="btn btn-orange btn-lg rounded-pill px-4">Khám phá menu</a>
+                    <a href="/contact" class="btn btn-light btn-lg rounded-pill px-4">Liên hệ ngay</a>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-card">
-                    <img src="/assets/img/tiramisu.png">
-                    <p>Tiramisu</p>
-                    <div class="cc-home-price">30.000đ</div>
-                    <button>Thêm vào giỏ</button>
+            <div class="col-lg-6">
+                <div class="hero-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&w=1000&q=80" class="img-fluid hero-img" alt="Hải sản">
+                    <div class="floating-card"><strong>Giao nhanh 2h</strong><br><small>Nội thành TP.HCM & Cần Thơ</small></div>
                 </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-card">
-                    <img src="/assets/img/ts-matcha-kem-trung-khe-.png">
-                    <p>Matcha</p>
-                    <div class="cc-home-price">40.000đ</div>
-                    <button>Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="cc-home-card">
-                    <img src="/assets/img/tra-sua-socola.png">
-                    <p>Socola</p>
-                    <div class="cc-home-price">40.000đ</div>
-                    <button>Thêm vào giỏ</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="container cc-home-about">
-        <div class="row align-items-center">
-            <div class="col-md-6 text-center">
-                <img src="/assets/img/CHA.png">
-            </div>
-            <div class="col-md-6">
-                <h4>Về CHA CHA</h4>
-                <p>
-                    Chúng tôi mang đến những ly trà sữa thơm ngon, nguyên liệu chất lượng cao
-                    và trải nghiệm tuyệt vời nhất cho khách hàng.
-                </p>
             </div>
         </div>
     </div>
-    <script src="/assets/js/main.js"></script>
-</div>
+</section>
+
+<section class="container py-5">
+    <div class="section-title">
+        <h2>Flash Sale Hải Sản</h2>
+        <p>Ưu đãi theo giờ, số lượng có hạn</p>
+        <div class="countdown"><span class="hours">02</span><span class="minutes">18</span><span class="seconds">45</span></div>
+    </div>
+    <div class="row g-4">
+        <?php foreach(array_slice($products, 0, 4) as $product): ?>
+            <div class="col-sm-6 col-lg-3">
+                <?php include './view/layouts/client/product-card.php'; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<section class="category-section py-5">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Danh Mục Sản Phẩm</h2>
+            <p>Chọn nhanh loại hải sản bạn cần</p>
+        </div>
+        <div class="row g-4">
+            <?php foreach($categories as $cat): ?>
+                <div class="col-6 col-lg-3">
+                    <div class="category-card">
+                        <div class="category-icon"><i class="fa-solid <?= $cat['icon'] ?>"></i></div>
+                        <h5><?= $cat['name'] ?></h5>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="section-title d-flex justify-content-between align-items-end flex-wrap gap-3">
+        <div><h2>Sản phẩm bán chạy</h2><p>Hải sản được khách hàng đặt nhiều nhất</p></div>
+        <a href="/product" class="btn btn-outline-primary rounded-pill">Xem tất cả</a>
+    </div>
+    <div class="row g-4">
+        <?php foreach($products as $product): ?>
+            <div class="col-sm-6 col-lg-4 col-xl-3">
+                <?php include './view/layouts/client/product-card.php'; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<section class="trust-section py-5">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-4"><i class="fa-solid fa-truck-fast"></i><h4>Giao hàng nhanh 2h</h4><p>Đóng gói giữ lạnh, giao đúng giờ.</p></div>
+            <div class="col-md-4"><i class="fa-solid fa-eye"></i><h4>Kiểm tra trước thanh toán</h4><p>Khách được kiểm tra hàng khi nhận.</p></div>
+            <div class="col-md-4"><i class="fa-solid fa-rotate-left"></i><h4>Đổi trả trong 24h</h4><p>Cam kết chất lượng sản phẩm.</p></div>
+        </div>
+    </div>
+</section>
+
+<?php require_once './view/layouts/client/footer.php'; ?>

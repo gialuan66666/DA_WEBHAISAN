@@ -1,82 +1,46 @@
 <?php
-include "data.php";
-include "funtion/cart.php";
-
+$pageTitle = 'Giỏ hàng - SeaFresh';
+require_once './data/data.php';
+require_once './view/layouts/client/header.php';
+$cartItems = array_slice($products, 0, 3);
+$total = 0;
 ?>
 
-<div class="cc-cart-wrapper container">
-    <h3 class="cc-cart-title text-center mb-4">Giỏ hàng của bạn</h3>
+<section class="page-banner"><div class="container"><h1>Giỏ hàng</h1><p>Kiểm tra sản phẩm trước khi thanh toán.</p></div></section>
 
-    <div class="row">
-        <div class="col-md-8">
-            <?php if (!empty($FinalCart['items'])): ?>
-                <?php foreach ($FinalCart['items'] as $item): ?>
-                    <div class="cc-cart-item d-flex align-items-center mb-3">
-
-                        <img src="<?= $item['image'] ?>" class="cc-cart-img" alt="<?= $item['name'] ?>">
-
-                        <div class="cc-cart-info flex-grow-1">
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="cart-box">
+                <?php foreach($cartItems as $item): $total += $item['price']; ?>
+                    <div class="cart-item">
+                        <img src="<?= $item['image'] ?>" alt="<?= htmlspecialchars($item['name']) ?>">
+                        <div class="flex-grow-1">
                             <h5><?= $item['name'] ?></h5>
-                            <p class="text-muted small mb-1">
-                                Danh mục: <?= $item['category'] ?? 'Trà sữa' ?> <br>
-                                Size: <?= $item['options']['size'] ?? 'M' ?>
-                            </p>
-                            <p class="cc-cart-price"><?= number_format($item['price'], 0, ',', '.') ?>đ</p>
-
-                            <div class="cc-cart-qty">
-                                <form method="POST" style="display:flex; gap:5px;">
-                                    <input type="hidden" name="product_id" value="<?= $item['id'] ?>">
-
-                                    <button type="submit" name="decrease">-</button>
-
-                                    <input type="text" value="<?= $item['quantity'] ?>" readonly style="width:40px; text-align:center;">
-
-                                    <button type="submit" name="increase">+</button>
-                                </form>
-                            </div>
+                            <p class="text-muted mb-1">Đơn vị: <?= $item['unit'] ?></p>
+                            <strong class="text-coral"><?= priceFormat($item['price']) ?></strong>
                         </div>
-
-                        <div class="cc-cart-total">
-                            <?= number_format($item['subtotal'], 0, ',', '.') ?>đ
+                        <div class="quantity-box small-qty">
+                            <button type="button" class="qty-btn minus">-</button>
+                            <input type="text" value="1" class="qty-input">
+                            <button type="button" class="qty-btn plus">+</button>
                         </div>
-
-                        <form method="POST" onsubmit="return confirm('Bạn có muốn xoá sản phẩm này không?')">
-                            <input type="hidden" name="product_id" value="<?= $item['id'] ?>">
-                            <button type="submit" name="remove" class="cc-cart-remove">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </form>
+                        <button class="btn btn-outline-danger rounded-circle"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <div class="alert alert-info">Giỏ hàng của bạn đang trống.</div>
-            <?php endif; ?>
+            </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="cc-cart-summary">
-                <h5>Tổng đơn hàng</h5>
-
-                <div class="d-flex justify-content-between">
-                    <span>Tạm tính</span>
-                    <span><?= number_format($FinalCart['total_amount'], 0, ',', '.') ?>đ</span>
-                </div>
-
+        <div class="col-lg-4">
+            <div class="summary-box">
+                <h4 class="fw-bold mb-4">Tóm tắt đơn hàng</h4>
+                <div class="d-flex justify-content-between"><span>Tạm tính</span><strong><?= priceFormat($total) ?></strong></div>
+                <div class="d-flex justify-content-between mt-3"><span>Phí giao hàng</span><strong>30.000đ</strong></div>
                 <hr>
-
-                <div class="d-flex justify-content-between fw-bold">
-                    <span>Tổng cộng</span>
-                    <span class="cc-cart-final">
-                        <?= number_format($FinalCart['total_amount'], 0, ',', '.') ?>đ
-                    </span>
-                </div>
-
-                <form action="/order" method="GET">
-                    <button type="submit" class="cc-cart-checkout w-100 mt-3">
-                        Thanh toán
-                    </button>
-                </form>
+                <div class="d-flex justify-content-between fs-5"><span>Tổng cộng</span><strong class="text-coral"><?= priceFormat($total + 30000) ?></strong></div>
+                <a href="checkout.php" class="btn btn-orange w-100 rounded-pill mt-4 py-3">Thanh toán</a>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<?php require_once './view/layouts/client/footer.php'; ?>
