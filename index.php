@@ -4,7 +4,13 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 session_start();
-include_once "./data/data.php";
+// include_once "./data/data.php";
+// 
+include_once "./config/database.php";
+$db = new Database();
+$conn = $db->connect();
+
+
 $request = $_SERVER['REQUEST_URI'];
 // Xóa query string nếu có
 $request = strtok($request, '?');
@@ -37,6 +43,13 @@ switch ($page) {
 
     case 'product':
 
+        $sql = "SELECT * FROM products";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $products = $stmt->fetchAll();
+
         include "view/page/client/products.php";
 
         break;
@@ -65,23 +78,43 @@ switch ($page) {
         include "view/page/client/register.php";
 
         break;
-    case 'order':
+    case 'admin/orders':
 
-        include "view/page/client/order.php";
+        require_once './controllers/OrderController.php';
+
+        $orderController = new OrderController();
+
+        $orders = $orderController->getAllOrders();
+
+        include "view/page/admin/orders.php";
 
         break;
 
     case 'admin':
-        include "view/page/admin/homeadmin.php";
+    case 'admin/dashboard':
+
+        require_once './controllers/DashboardController.php';
+
+        $dashboard = new DashboardController();
+
+        $revenue = $dashboard->getRevenue();
+        $totalOrders = $dashboard->getTotalOrders();
+        $totalProducts = $dashboard->getTotalProducts();
+        $totalUsers = $dashboard->getTotalUsers();
+
+        $orders = $dashboard->getLatestOrders();
+
+        $adminProducts = $dashboard->getLowStockProducts();
+
+        include "view/page/admin/dashboard.php";
+
         break;
+
 
     case 'admin/users':
         include "view/page/admin/users.php";
         break;
 
-    case 'admin/orders':
-        include "view/page/admin/orders.php";
-        break;
 
     case 'admin/categories':
         include "view/page/admin/categories.php";
@@ -90,10 +123,19 @@ switch ($page) {
     case 'admin/users':
         include "view/page/admin/users.php";
         break;
-    
+
     case 'admin/products':
+
+        require_once './controllers/ProductController.php';
+
+        $productController = new ProductController();
+
+        $adminProducts = $productController->getAllProducts();
+
         include "view/page/admin/products.php";
+
         break;
+
     case 'admin/products/create':
         include "view/page/admin/product-create.php";
         break;

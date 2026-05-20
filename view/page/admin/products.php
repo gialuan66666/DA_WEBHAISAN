@@ -33,16 +33,17 @@ require_once './view/layouts/admin/header.php'; ?>
           <th class="text-end">Thao tác</th>
         </tr>
       </thead>
-      <tbody><?php foreach ($adminProducts as $p): ?><tr>
-            <td><img src="<?= $p['image'] ?>" class="product-thumb"></td>
-            <td class="fw-bold"><?= $p['name'] ?></td>
-            <td><?= $p['category'] ?></td>
-            <td class="text-danger fw-bold"><?= number_format($p['price']) ?>đ</td>
-            <td><?= $p['stock'] ?></td>
-            <td><span class="badge-soft"><?= $p['status'] ?></span></td>
-            <td class="text-end"><a href="/products/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">Sửa</a> <button class="btn btn-sm btn-outline-danger rounded-pill">Xóa</button></td>
+      <tbody><?php foreach (($adminProducts ?? []) as $p): ?>
+            <td><img src="<?= $p['image'] ?? '' ?>" class="product-thumb"></td>
+            <td class="fw-bold"><?= $p['name'] ?? '' ?></td>
+            <td><?= $p['category_name'] ?? ($p['category'] ?? '') ?></td>
+            <td class="text-danger fw-bold"><?= number_format($p['price'] ?? 0) ?>đ</td>
+            <td><?= $p['quantity'] ?? ($p['stock'] ?? 0) ?></td>
+            <td><span class="badge-soft"><?= $p['status'] ?? '' ?></span></td>
+            <td class="text-end"><a href="/admin/products/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">Sửa</a> <button class="btn btn-sm btn-outline-danger rounded-pill">Xóa</button></td>
           </tr><?php endforeach; ?></tbody>
     </table>
   </div>
+
 </div>
 <?php require_once './view/layouts/admin/footer.php'; ?>

@@ -33,7 +33,7 @@ require_once './view/layouts/client/header.php';
         <div class="countdown"><span class="hours">02</span><span class="minutes">18</span><span class="seconds">45</span></div>
     </div>
     <div class="row g-4">
-        <?php foreach(array_slice($products, 0, 4) as $product): ?>
+        <?php foreach(array_slice($products ?? [], 0, 4) as $product): ?>
             <div class="col-sm-6 col-lg-3">
                 <?php include './view/layouts/client/product-card.php'; ?>
             </div>

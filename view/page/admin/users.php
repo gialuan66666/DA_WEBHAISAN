@@ -14,12 +14,12 @@ require_once './view/layouts/admin/header.php'; ?>
                 <th></th>
             </tr>
         </thead>
-        <tbody><?php foreach ($customers as $c): ?><tr>
-                    <td class="fw-bold"><?= $c['name'] ?></td>
-                    <td><?= $c['email'] ?></td>
-                    <td><?= $c['phone'] ?></td>
-                    <td><?= $c['orders'] ?></td>
-                    <td class="text-danger fw-bold"><?= number_format($c['spent']) ?>đ</td>
+        <tbody><?php foreach (($customers ?? []) as $c): ?><tr>
+                    <td class="fw-bold"><?= $c['name'] ?? '' ?></td>
+                    <td><?= $c['email'] ?? '' ?></td>
+                    <td><?= $c['phone'] ?? '' ?></td>
+                    <td><?= $c['orders'] ?? '' ?></td>
+                    <td class="text-danger fw-bold"><?= number_format($c['spent'] ?? 0) ?>đ</td>
                     <td class="text-end"><button class="btn btn-sm btn-outline-primary rounded-pill">Xem</button></td>
                 </tr><?php endforeach; ?></tbody>
     </table>
