@@ -1,7 +1,13 @@
 <?php
 $pageTitle = 'Giỏ hàng - SeaFresh';
+
 require_once './data/data.php';
 require_once './view/layouts/client/header.php';
+
+function priceFormat($price) {
+    return number_format($price, 0, ',', '.') . 'đ';
+}
+
 $cartItems = array_slice($products, 0, 3);
 $total = 0;
 ?>
