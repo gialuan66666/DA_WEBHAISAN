@@ -4,12 +4,6 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 session_start();
-// include_once "./data/data.php";
-// 
-include_once "./config/database.php";
-$db = new Database();
-$conn = $db->connect();
-
 
 $request = $_SERVER['REQUEST_URI'];
 // Xóa query string nếu có
@@ -43,13 +37,6 @@ switch ($page) {
 
     case 'product':
 
-        $sql = "SELECT * FROM products";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        $products = $stmt->fetchAll();
-
         include "view/page/client/products.php";
 
         break;
@@ -80,31 +67,14 @@ switch ($page) {
         break;
     case 'admin/orders':
 
-        require_once './controllers/OrderController.php';
-
-        $orderController = new OrderController();
-
-        $orders = $orderController->getAllOrders();
 
         include "view/page/admin/orders.php";
 
         break;
 
     case 'admin':
+
     case 'admin/dashboard':
-
-        require_once './controllers/DashboardController.php';
-
-        $dashboard = new DashboardController();
-
-        $revenue = $dashboard->getRevenue();
-        $totalOrders = $dashboard->getTotalOrders();
-        $totalProducts = $dashboard->getTotalProducts();
-        $totalUsers = $dashboard->getTotalUsers();
-
-        $orders = $dashboard->getLatestOrders();
-
-        $adminProducts = $dashboard->getLowStockProducts();
 
         include "view/page/admin/dashboard.php";
 
@@ -125,12 +95,6 @@ switch ($page) {
         break;
 
     case 'admin/products':
-
-        require_once './controllers/ProductController.php';
-
-        $productController = new ProductController();
-
-        $adminProducts = $productController->getAllProducts();
 
         include "view/page/admin/products.php";
 

@@ -1,34 +1,39 @@
 <?php
 
+require_once __DIR__ . '/conect.php';
+
+loadEnv(__DIR__ . '/../.env');
+
 class Database
 {
-    private $dbhost = "localhost";
-    private $dbuser = "root";
-    private $dbname = "da_webhaisan";
-    private $dbpass = "mysql"; 
-
-    public $dbconnection;
+    private $dbconnection;
 
     public function connect()
     {
+        if ($this->dbconnection) {
+            return $this->dbconnection;
+        }
+
         try {
+            $host = $_ENV['DB_HOST'] ?? 'localhost';
+            $port = $_ENV['DB_PORT'] ?? '3306';
+            $dbname = $_ENV['DB_NAME'] ?? '';
+            $user = $_ENV['DB_USER'] ?? 'root';
+            $pass = $_ENV['DB_PASS'] ?? '';
 
             $this->dbconnection = new PDO(
-                "mysql:host={$this->dbhost};dbname={$this->dbname};charset=utf8",
-                $this->dbuser,
-                $this->dbpass,
+                "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4",
+                $user,
+                $pass,
                 [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 ]
             );
 
             return $this->dbconnection;
-
         } catch (PDOException $e) {
-
-            die("Kết nối thất bại: " . $e->getMessage());
-
+            die('Ket noi database that bai: ' . $e->getMessage());
         }
     }
 }

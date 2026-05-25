@@ -1,6 +1,14 @@
-<?php $pageTitle = 'Quản lý sản phẩm';
-require_once './data/data.php';
-require_once './view/layouts/admin/header.php'; ?>
+<?php
+$pageTitle = 'Quản lý sản phẩm';
+
+require_once './controllers/ProductController.php';
+
+$productController = new ProductController();
+$adminProducts = $productController->getAdminProducts();
+
+require_once './view/layouts/admin/header.php';
+?>
+
 <div class="panel">
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
     <div>
@@ -33,15 +41,19 @@ require_once './view/layouts/admin/header.php'; ?>
           <th class="text-end">Thao tác</th>
         </tr>
       </thead>
-      <tbody><?php foreach (($adminProducts ?? []) as $p): ?>
-            <td><img src="<?= $p['image'] ?? '' ?>" class="product-thumb"></td>
-            <td class="fw-bold"><?= $p['name'] ?? '' ?></td>
-            <td><?= $p['category_name'] ?? ($p['category'] ?? '') ?></td>
+      <tbody>
+        <?php foreach (($adminProducts ?? []) as $p): ?>
+          <tr>
+            <td><img src="<?= htmlspecialchars($p['image'] ?? '') ?>" class="product-thumb"></td>
+            <td class="fw-bold"><?= htmlspecialchars($p['name'] ?? '') ?></td>
+            <td><?= htmlspecialchars($p['category_name'] ?? ($p['category'] ?? '')) ?></td>
             <td class="text-danger fw-bold"><?= number_format($p['price'] ?? 0) ?>đ</td>
-            <td><?= $p['quantity'] ?? ($p['stock'] ?? 0) ?></td>
-            <td><span class="badge-soft"><?= $p['status'] ?? '' ?></span></td>
+            <td><?= htmlspecialchars($p['quantity'] ?? ($p['stock'] ?? 0)) ?></td>
+            <td><span class="badge-soft"><?= htmlspecialchars($p['status'] ?? '') ?></span></td>
             <td class="text-end"><a href="/admin/products/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">Sửa</a> <button class="btn btn-sm btn-outline-danger rounded-pill">Xóa</button></td>
-          </tr><?php endforeach; ?></tbody>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
     </table>
   </div>
 

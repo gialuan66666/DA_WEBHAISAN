@@ -1,56 +1,22 @@
 <?php
 
 require_once './config/database.php';
+require_once './models/productsModels.php';
 
 class ProductController
 {
-    private $conn;
+    private ProductsModels $productModel;
 
     public function __construct()
     {
-        $db = new Database();
+        $database = new Database();
+        $db = $database->connect();
 
-        $this->conn = $db->connect();
+        $this->productModel = new ProductsModels($db);
     }
 
-    public function getAllProducts()
+    public function getAdminProducts(): array
     {
-        $sql = "
-            SELECT 
-                products.*,
-                categories.name AS category_name
-            FROM products
-
-            LEFT JOIN categories
-            ON products.category_id = categories.id
-
-            ORDER BY products.id DESC
-        ";
-
-        $stmt = $this->conn->prepare($sql);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll();
+        return $this->productModel->getAllProducts();
     }
-
-    public function getProductById($id)
-    {
-        $sql = "
-            SELECT 
-                products.*,
-                categories.name AS category_name
-            FROM products
-            LEFT JOIN categories
-                ON products.category_id = categories.id
-            WHERE products.id = :id
-        ";
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetch();
-    }
-
 }
