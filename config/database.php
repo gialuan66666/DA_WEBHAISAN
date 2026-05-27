@@ -18,7 +18,7 @@ class Database
             $host = $_ENV['DB_HOST'] ?? 'localhost';
             $port = $_ENV['DB_PORT'] ?? '3306';
             $dbname = $_ENV['DB_NAME'] ?? '';
-            $user = $_ENV['DB_USER'] ?? 'root';
+            $user = $_ENV['DB_USER'] ?? '';
             $pass = $_ENV['DB_PASS'] ?? '';
 
             $this->dbconnection = new PDO(
@@ -32,8 +32,9 @@ class Database
             );
 
             return $this->dbconnection;
+
         } catch (PDOException $e) {
-            die('Ket noi database that bai: ' . $e->getMessage());
+            die('Kết nối database thất bại: ' . $e->getMessage());
         }
     }
 }

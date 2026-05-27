@@ -9,8 +9,13 @@ function loadEnv($path)
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
     foreach ($lines as $line) {
+        $line = trim($line);
 
-        if (str_starts_with(trim($line), '#')) {
+        if ($line === '' || str_starts_with($line, '#')) {
+            continue;
+        }
+
+        if (!str_contains($line, '=')) {
             continue;
         }
 
@@ -18,6 +23,9 @@ function loadEnv($path)
 
         $key = trim($key);
         $value = trim($value);
+
+        // Bỏ dấu nháy ngoài cùng nếu có
+        $value = trim($value, "\"'");
 
         $_ENV[$key] = $value;
         putenv("$key=$value");
