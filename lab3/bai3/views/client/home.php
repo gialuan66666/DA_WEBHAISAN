@@ -1,0 +1,1 @@
+<?php include __DIR__ . '/header.php'; ?><section class="hero"><div class="container"><h1>Bài 3: Trang người dùng</h1><p>Client và Admin nằm chung một ứng dụng MVC.</p><a class="btn" href="/bai3?page=products">Xem sản phẩm</a></div></section><?php include __DIR__ . '/footer.php'; ?>

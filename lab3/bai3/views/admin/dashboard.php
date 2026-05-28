@@ -1,0 +1,1 @@
+<?php include __DIR__ . '/layout_start.php'; ?><h1>Dashboard Admin</h1><div class="grid"><div class="card"><h3>Tổng sản phẩm</h3><p>3 sản phẩm</p></div><div class="card"><h3>Đơn hàng</h3><p>12 đơn hàng</p></div><div class="card"><h3>Người dùng</h3><p>25 tài khoản</p></div></div><?php include __DIR__ . '/layout_end.php'; ?>
