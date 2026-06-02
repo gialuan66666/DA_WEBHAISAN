@@ -7,6 +7,7 @@ $productController = new ProductController();
 $adminProducts = $productController->getAdminProducts();
 
 require_once './view/layouts/admin/header.php';
+require_once './component/notifi.php';
 ?>
 
 <div class="panel">
@@ -50,7 +51,16 @@ require_once './view/layouts/admin/header.php';
             <td class="text-danger fw-bold"><?= number_format($p['price'] ?? 0) ?>đ</td>
             <td><?= htmlspecialchars($p['quantity'] ?? ($p['stock'] ?? 0)) ?></td>
             <td><span class="badge-soft"><?= htmlspecialchars($p['status'] ?? '') ?></span></td>
-            <td class="text-end"><a href="/admin/products/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">Sửa</a> <button class="btn btn-sm btn-outline-danger rounded-pill">Xóa</button></td>
+            <td class="text-end"><a href="/admin/products/edit?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary rounded-pill">Sửa</a> <button
+                type="button"
+                class="btn btn-sm btn-outline-danger rounded-pill"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                data-id="<?= $p['id'] ?>"
+                data-name="<?= htmlspecialchars($p['name']) ?>"
+                data-action="/admin/products/delete">
+                Xóa
+              </button></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -58,4 +68,5 @@ require_once './view/layouts/admin/header.php';
   </div>
 
 </div>
+<?php require_once './component/form-delete.php'; ?>
 <?php require_once './view/layouts/admin/footer.php'; ?>

@@ -107,6 +107,14 @@ switch ($page) {
     case 'admin/products/edit':
         include "view/page/admin/product-edit.php";
         break;
+    case 'admin/products/delete':
+
+        require_once './controllers/ProductController.php';
+
+        $productController = new ProductController();
+        $productController->destroy();
+
+        break;
     default:
         echo "<h1>404</h1>";
 }

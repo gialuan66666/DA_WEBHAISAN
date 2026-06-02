@@ -92,19 +92,19 @@ class ProductsModels
         return $stmt->fetchAll();
     }
     public function getProductById(int $id): ?array
-{
-    $sql = "SELECT * FROM products WHERE id = :id LIMIT 1";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([':id' => $id]);
+    {
+        $sql = "SELECT * FROM products WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
 
-    $product = $stmt->fetch();
+        $product = $stmt->fetch();
 
-    return $product ?: null;
-}
+        return $product ?: null;
+    }
 
-public function updateProduct(int $id, array $data): bool
-{
-    $sql = "
+    public function updateProduct(int $id, array $data): bool
+    {
+        $sql = "
         UPDATE products SET
             category_id = :category_id,
             name = :name,
@@ -120,21 +120,31 @@ public function updateProduct(int $id, array $data): bool
         WHERE id = :id
     ";
 
-    $stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
 
-    return $stmt->execute([
-        ':id' => $id,
-        ':category_id' => $data['category_id'],
-        ':name' => $data['name'],
-        ':slug' => $data['slug'],
-        ':image' => $data['image'],
-        ':old_price' => $data['old_price'],
-        ':price' => $data['price'],
-        ':unit' => $data['unit'],
-        ':quantity' => $data['quantity'],
-        ':badge' => $data['badge'],
-        ':description' => $data['description'],
-        ':status' => $data['status'],
-    ]);
-}
+        return $stmt->execute([
+            ':id' => $id,
+            ':category_id' => $data['category_id'],
+            ':name' => $data['name'],
+            ':slug' => $data['slug'],
+            ':image' => $data['image'],
+            ':old_price' => $data['old_price'],
+            ':price' => $data['price'],
+            ':unit' => $data['unit'],
+            ':quantity' => $data['quantity'],
+            ':badge' => $data['badge'],
+            ':description' => $data['description'],
+            ':status' => $data['status'],
+        ]);
+    }
+    public function deleteProduct(int $id): bool
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM products WHERE id = :id"
+        );
+
+        return $stmt->execute([
+            ':id' => $id
+        ]);
+    }
 }

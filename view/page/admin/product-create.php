@@ -1,11 +1,20 @@
-<?php $pageTitle = 'Thêm sản phẩm';
+<?php
+$pageTitle = 'Thêm sản phẩm';
+
 require_once './controllers/ProductController.php';
+
 $productController = new ProductController();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productController->store();
 }
+
 $categories = $productController->getCategories();
-require_once './view/layouts/admin/header.php'; ?>
+
+require_once './view/layouts/admin/header.php';
+require_once './component/notifi.php';
+?>
+
 <div class="panel">
     <form method="POST" enctype="multipart/form-data">
         <div class="row g-4">
