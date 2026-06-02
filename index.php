@@ -5,6 +5,8 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 session_start();
 
+
+require_once './controllers/admin/ProductController.php';
 $request = $_SERVER['REQUEST_URI'];
 // Xóa query string nếu có
 $request = strtok($request, '?');
@@ -109,7 +111,7 @@ switch ($page) {
         break;
     case 'admin/products/delete':
 
-        require_once './controllers/ProductController.php';
+        
 
         $productController = new ProductController();
         $productController->destroy();

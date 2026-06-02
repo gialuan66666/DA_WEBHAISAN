@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Quản lý sản phẩm';
 
-require_once './controllers/ProductController.php';
+require_once './controllers/admin/ProductController.php';
 
 $productController = new ProductController();
 $adminProducts = $productController->getAdminProducts();
