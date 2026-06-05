@@ -115,16 +115,16 @@ switch ($page) {
 
     case 'admin/products':
 
-        include "view/page/admin/products.php";
+        include "view/page/admin/Products/products.php";
 
         break;
 
     case 'admin/products/create':
-        include "view/page/admin/product-create.php";
+        include "view/page/admin/Products/product-create.php";
         break;
 
     case 'admin/products/edit':
-        include "view/page/admin/product-edit.php";
+        include "view/page/admin/Products/product-edit.php";
         break;
     case 'admin/products/delete':
 
