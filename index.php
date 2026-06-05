@@ -7,6 +7,8 @@ session_start();
 
 
 require_once './controllers/admin/ProductController.php';
+require_once './controllers/admin/UserController.php';
+
 $request = $_SERVER['REQUEST_URI'];
 // Xóa query string nếu có
 $request = strtok($request, '?');
@@ -84,7 +86,25 @@ switch ($page) {
 
 
     case 'admin/users':
-        include "view/page/admin/users.php";
+        $userController = new UserController();
+        $customers = $userController->index();
+        include "view/page/admin/Users/users.php";
+        break;
+
+    case 'user_edit':
+        $userController = new UserController();
+        $user = $userController->show((int)$_GET['id']);
+        include "view/page/admin/Users/Edit.php";
+        break;
+
+    case 'user_update':
+        $userController = new UserController();
+        $userController->update();
+        break;
+
+    case 'user_delete':
+        $userController = new UserController();
+        $userController->destroy();
         break;
 
 
@@ -92,9 +112,6 @@ switch ($page) {
         include "view/page/admin/categories.php";
         break;
 
-    case 'admin/users':
-        include "view/page/admin/users.php";
-        break;
 
     case 'admin/products':
 
@@ -111,7 +128,7 @@ switch ($page) {
         break;
     case 'admin/products/delete':
 
-        
+
 
         $productController = new ProductController();
         $productController->destroy();
