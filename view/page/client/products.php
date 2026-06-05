@@ -132,8 +132,10 @@ if ($keyword !== '') {
                                     Đơn vị: <?= $product['unit'] ?? 'kg' ?>
                                 </p>
 
-                                <p class="text-muted text-decoration-line-through mb-1">
-                                    <?= number_format($product['price'] * 1.2) ?>đ
+                                <p class="text-muted text-decoration-line-through mb-1" style="height:24px;">
+                                    <?php if (!empty($product['old_price']) && $product['old_price'] > 0): ?>
+                                        <?= number_format($product['old_price']) ?>đ
+                                    <?php endif; ?>
                                 </p>
 
                                 <h4 class="text-orange fw-bold mb-3">
@@ -141,7 +143,7 @@ if ($keyword !== '') {
                                 </h4>
 
                                 <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-outline-primary w-50 rounded-pill">
+                                    <a href="/productdetail?id=<?= $product['id'] ?>" class="btn btn-outline-primary w-50 rounded-pill">
                                         Chi tiết
                                     </a>
 

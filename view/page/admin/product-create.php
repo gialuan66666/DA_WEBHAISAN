@@ -30,7 +30,15 @@ require_once './component/notifi.php';
                     <div class="col-md-6"><label class="form-label">Đơn vị</label><input name="unit" class="form-control" value="kg" placeholder="kg / con"></div>
                 </div>
                 <div class="row g-3 mt-1">
-                    <div class="col-md-6"><label class="form-label">Giá cũ</label><input name="old_price" class="form-control" type="number"></div>
+                    <div class="col-md-6">
+                        <label class="form-label">Giá cũ</label>
+                        <input
+                            name="old_price"
+                            class="form-control"
+                            type="number"
+                            min="0"
+                            placeholder="Bỏ trống nếu không giảm giá">
+                    </div>
                     <div class="col-md-6"><label class="form-label">Giá bán</label><input name="price" class="form-control" type="number"></div>
                 </div>
                 <div class="mb-3 mt-3"><label class="form-label">Mô tả</label><textarea name="description" class="form-control" rows="5"></textarea></div>

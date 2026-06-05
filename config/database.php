@@ -6,11 +6,11 @@ loadEnv(__DIR__ . '/../.env');
 
 class Database
 {
-    private $dbconnection;
+    private $dbconnection = null;
 
     public function connect()
     {
-        if ($this->dbconnection) {
+        if ($this->dbconnection !== null) {
             return $this->dbconnection;
         }
 
@@ -22,7 +22,7 @@ class Database
             $pass = $_ENV['DB_PASS'] ?? '';
 
             $this->dbconnection = new PDO(
-                "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4",
+                "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4",
                 $user,
                 $pass,
                 [
