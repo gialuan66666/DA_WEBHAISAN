@@ -7,7 +7,10 @@
         <p class="product-category"><?= $product['category'] ?></p>
         <h5><?= $product['name'] ?></h5>
         <p class="unit">Đơn vị: <?= $product['unit'] ?></p>
-        <p class="old-price"><?= priceFormat($product['old_price']) ?></p>
+        <?php if (!empty($product['old_price']) && $product['old_price'] > 0): ?>
+            <p class="old-price"><?= priceFormat($product['old_price']) ?></p>
+        <?php endif; ?>
+
         <p class="new-price"><?= priceFormat($product['price']) ?></p>
         <div class="d-flex gap-2">
             <a href="/productdetail?id=<?= $product['id'] ?>" class="btn btn-outline-primary w-50 rounded-pill">Chi tiết</a>

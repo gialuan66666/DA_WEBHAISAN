@@ -92,7 +92,7 @@ class ProductController
             throw new RuntimeException('Chi cho phep upload anh JPG, PNG, WEBP hoac GIF');
         }
 
-        $uploadDir = __DIR__ . '/../uploads/products/';
+        $uploadDir = __DIR__ . './../../uploads/products/';
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);

@@ -9,26 +9,26 @@ class ProductsModels
         $this->conn = $db;
     }
 
-    public function getAllProducts(): array
+    public function getAllProducts()
     {
         $sql = "
-            SELECT 
-                p.id,
-                p.name,
-                p.image,
-                p.price,
-                p.quantity,
-                p.status,
-                c.name AS category_name
-            FROM products p
-            LEFT JOIN categories c ON p.category_id = c.id
-            ORDER BY p.id DESC
-        ";
+        SELECT 
+            p.id,
+            p.name,
+            p.image,
+            p.price,
+            p.quantity,
+            p.status,
+            c.name AS category_name
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        ORDER BY p.id DESC
+    ";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function createProduct(array $data): bool
     {
@@ -44,8 +44,6 @@ class ProductsModels
             quantity,
             badge,
             description,
-            is_flash_sale,
-            is_featured,
             status
         ) VALUES (
             :category_id,
@@ -58,8 +56,6 @@ class ProductsModels
             :quantity,
             :badge,
             :description,
-            :is_flash_sale,
-            :is_featured,
             :status
         )
     ";
@@ -77,8 +73,6 @@ class ProductsModels
             ':quantity' => $data['quantity'],
             ':badge' => $data['badge'],
             ':description' => $data['description'],
-            ':is_flash_sale' => $data['is_flash_sale'],
-            ':is_featured' => $data['is_featured'],
             ':status' => $data['status'],
         ]);
     }
