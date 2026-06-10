@@ -24,9 +24,53 @@ require_once './view/layouts/client/header.php';
                 <button type="button" class="qty-btn plus">+</button>
             </div>
             <div class="d-flex gap-3 flex-wrap">
-                <a href="/cart" class="btn btn-orange btn-lg rounded-pill px-4"><i class="fa-solid fa-cart-plus"></i> Thêm vào giỏ</a>
-                <a href="/checkout" class="btn btn-blue btn-lg rounded-pill px-4">Mua ngay</a>
+
+                <form action="/cart/add" method="POST">
+                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                    <input type="hidden" name="quantity" id="cartQty" value="1">
+
+                    <button type="submit" class="btn btn-orange btn-lg rounded-pill px-4">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        Thêm vào giỏ
+                    </button>
+                </form>
+
+                <form action="/buy-now" method="POST">
+                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                    <input type="hidden" name="quantity" id="buyQty" value="1">
+
+                    <button type="submit" class="btn btn-blue btn-lg rounded-pill px-4">
+                        Mua ngay
+                    </button>
+                </form>
+
             </div>
+
+            <script>
+                const qtyInput = document.querySelector('.qty-input');
+                const minusBtn = document.querySelector('.minus');
+                const plusBtn = document.querySelector('.plus');
+                const cartQty = document.getElementById('cartQty');
+                const buyQty = document.getElementById('buyQty');
+
+                function syncQty() {
+                    cartQty.value = qtyInput.value;
+                    buyQty.value = qtyInput.value;
+                }
+
+                plusBtn.addEventListener('click', function() {
+                    qtyInput.value = Number(qtyInput.value) + 1;
+                    syncQty();
+                });
+
+                minusBtn.addEventListener('click', function() {
+                    if (Number(qtyInput.value) > 1) {
+                        qtyInput.value = Number(qtyInput.value) - 1;
+                    }
+
+                    syncQty();
+                });
+            </script>
         </div>
     </div>
 </section>
@@ -34,7 +78,7 @@ require_once './view/layouts/client/header.php';
 <section class="container pb-5">
     <h3 class="fw-bold text-blue mb-4">Sản phẩm liên quan</h3>
     <div class="row g-4">
-        <?php foreach(array_slice($products, 0, 4) as $product): ?>
+        <?php foreach (array_slice($products, 0, 4) as $product): ?>
             <div class="col-sm-6 col-lg-3"><?php include './view/layouts/client/product-card.php'; ?></div>
         <?php endforeach; ?>
     </div>

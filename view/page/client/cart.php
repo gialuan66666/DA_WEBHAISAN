@@ -45,7 +45,7 @@ $total = 0;
                 <div class="d-flex justify-content-between mt-3"><span>Phí giao hàng</span><strong>30.000đ</strong></div>
                 <hr>
                 <div class="d-flex justify-content-between fs-5"><span>Tổng cộng</span><strong class="text-coral"><?= priceFormat($total + 30000) ?></strong></div>
-                <a href="checkout.php" class="btn btn-orange w-100 rounded-pill mt-4 py-3">Thanh toán</a>
+                <a href="/checkout" class="btn btn-orange w-100 rounded-pill mt-4 py-3">Thanh toán</a>
             </div>
         </div>
     </div>

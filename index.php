@@ -4,8 +4,12 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 session_start();
+//CLIENT
+require_once './controllers/client/CartController.php';
+require_once './controllers/client/CheckoutController.php';
 
-
+//ADMIN
+require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
 require_once './controllers/admin/UserController.php';
 
@@ -44,21 +48,47 @@ switch ($page) {
         include "view/page/client/products.php";
 
         break;
-    case 'checkout':
 
-        include "view/page/client/checkout.php";
-
-        break;
     case 'productdetail':
 
         include "view/page/client/detail.php";
 
         break;
     case 'cart':
+        $cartController = new CartController();
+        $cartItems = $cartController->index();
 
         include "view/page/client/cart.php";
 
         break;
+
+    case 'cart/add':
+
+        $cartController = new CartController();
+        $cartController->add();
+
+        break;
+
+    case 'cart/remove':
+        $cartController = new CartController();
+        $cartController->remove();
+
+        break;
+
+    case 'buy-now':
+        $cartController = new CartController();
+        $cartController->buyNow();
+
+        break;
+
+    case 'checkout':
+        $checkoutController = new CheckoutController();
+        $checkoutItems = $checkoutController->index();
+
+        include "view/page/client/checkout.php";
+
+        break;
+
     case 'login':
 
         include "view/page/client/login.php";
@@ -67,12 +97,6 @@ switch ($page) {
     case 'register':
 
         include "view/page/client/register.php";
-
-        break;
-    case 'admin/orders':
-
-
-        include "view/page/admin/orders.php";
 
         break;
 
@@ -127,12 +151,21 @@ switch ($page) {
         include "view/page/admin/Products/product-edit.php";
         break;
     case 'admin/products/delete':
-
-
-
         $productController = new ProductController();
         $productController->destroy();
 
+        break;
+    case 'admin/orders':
+        include "view/page/admin/Orders/orders.php";
+        break;
+
+    case 'admin/orders-detail':
+        include "view/page/admin/Orders/order-detail.php";
+        break;
+
+    case 'admin/orders/update-status':
+        $orderController = new OrderController();
+        $orderController->updateStatus();
         break;
     default:
         echo "<h1>404</h1>";

@@ -1,6 +1,13 @@
-<?php 
+<?php
 $pageTitle = 'Quản lý đơn hàng';
-require_once './view/layouts/admin/header.php'; 
+
+require_once './controllers/admin/OrderController.php';
+
+$orderController = new OrderController();
+$orders = $orderController->getAdminOrders();
+
+require_once './view/layouts/admin/header.php';
+require_once './component/notifi.php';
 ?>
 
 <div class="panel">
@@ -28,22 +35,22 @@ require_once './view/layouts/admin/header.php';
 
             <tbody>
 
-                <?php if(!empty($orders)): ?>
+                <?php if (!empty($orders)): ?>
 
                     <?php foreach ($orders as $o): ?>
 
                         <tr>
 
                             <td class="fw-bold">
-                                #<?= $o['id'] ?>
+                                #DH<?= str_pad(((int)$o['id'] % 100), 2, '0', STR_PAD_LEFT) ?>
                             </td>
 
                             <td>
-                                <?= $o['name'] ?? 'Chưa có' ?>
+                                <?= htmlspecialchars($o['customer_name'] ?? 'Chưa có') ?>
                             </td>
 
                             <td>
-                                <?= $o['phone'] ?? 'Chưa có' ?>
+                                <?= htmlspecialchars($o['customer_phone'] ?? 'Chưa có') ?>
                             </td>
 
                             <td class="text-danger fw-bold">
@@ -52,17 +59,27 @@ require_once './view/layouts/admin/header.php';
 
                             <td>
                                 <span class="badge-soft">
-                                    <?= $o['status'] ?? 'pending' ?>
+                                    <?php
+                                    $statusText = [
+                                        'pending'   => 'Chờ xác nhận',
+                                        'confirmed' => 'Đã xác nhận',
+                                        'shipping'  => 'Đang giao',
+                                        'completed' => 'Hoàn tất',
+                                        'cancelled' => 'Đã hủy'
+                                    ];
+                                    ?>
+
+                                    <?= $statusText[$o['order_status']] ?? $o['order_status'] ?>
                                 </span>
                             </td>
 
                             <td>
-                                <?= $o['created_at'] ?? '' ?>
+                                <?= htmlspecialchars($o['created_at'] ?? '') ?>
                             </td>
 
                             <td class="text-end">
-                                <a href="/admin/order-detail?id=<?= $o['id'] ?>" 
-                                   class="btn btn-sm btn-outline-primary rounded-pill">
+                                <a href="/admin/orders-detail?id=<?= htmlspecialchars($o['id']) ?>"
+                                    class="btn btn-sm btn-outline-primary rounded-pill">
                                     Chi tiết
                                 </a>
                             </td>

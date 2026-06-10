@@ -142,15 +142,22 @@ if ($keyword !== '') {
                                     <?= number_format($product['price']) ?>đ
                                 </h4>
 
-                                <div class="d-flex gap-2">
-                                    <a href="/productdetail?id=<?= $product['id'] ?>" class="btn btn-outline-primary w-50 rounded-pill">
-                                        Chi tiết
-                                    </a>
+                                <form action="/cart/add" method="POST" class="m-0">
+                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                    <input type="hidden" name="quantity" value="1">
 
-                                    <button class="btn btn-primary w-50 rounded-pill d-flex justify-content-center align-items-center">
-                                        <i class="bi bi-cart3"></i>
-                                    </button>
-                                </div>
+                                    <div class="d-flex gap-2">
+                                        <a href="/productdetail?id=<?= $product['id'] ?>" class="btn btn-outline-primary w-50 rounded-pill">
+                                            Chi tiết
+                                        </a>
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary w-50 rounded-pill d-flex justify-content-center align-items-center">
+                                            <i class="bi bi-cart3"></i>
+                                        </button>
+                                    </div>
+                                </form>
 
                             </div>
 

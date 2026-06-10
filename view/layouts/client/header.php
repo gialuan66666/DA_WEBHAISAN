@@ -47,7 +47,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/login" class="btn btn-outline-primary rounded-pill d-none d-md-inline-flex">Đăng nhập</a>
                     <a href="/cart  " class="btn btn-orange rounded-pill position-relative">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="cart-badge">3</span>
+                        <!-- <span class="cart-badge">3</span> -->
                     </a>
                 </div>
             </div>
