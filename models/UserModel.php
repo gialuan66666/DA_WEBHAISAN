@@ -41,7 +41,7 @@ class UserModel
             ':fullname' => $data['fullname'],
             ':email' => $data['email'],
             ':phone' => $data['phone'],
-            ':password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            ':password' => $data['password'],
             ':address' => $data['address'],
             ':status' => $data['status'],
         ]);
@@ -78,5 +78,14 @@ class UserModel
         return $stmt->execute([
             ':id' => $id
         ]);
+    }
+
+    public function findByEmail($email)
+    {
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':email' => $email]);
+
+        return $stmt->fetch();
     }
 }

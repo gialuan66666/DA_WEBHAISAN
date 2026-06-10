@@ -30,12 +30,6 @@ require_once './view/layouts/admin/header.php';
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Địa chỉ</label>
-        <input type="text" name="address" class="form-control"
-            value="<?= htmlspecialchars($user['address']) ?>">
-    </div>
-
-    <div class="mb-3">
         <label class="form-label">Trạng thái</label>
         <select name="status" class="form-control">
             <option value="1" <?= $user['status'] == 1 ? 'selected' : '' ?>>

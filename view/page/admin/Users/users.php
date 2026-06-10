@@ -12,7 +12,6 @@ require_once './view/layouts/admin/header.php';
                 <th>Khách hàng</th>
                 <th>Email</th>
                 <th>SĐT</th>
-                <th>Địa chỉ</th>
                 <th>Trạng thái</th>
                 <th>Ngày tạo</th>
                 <th class="text-end">Hành động</th>
@@ -26,7 +25,6 @@ require_once './view/layouts/admin/header.php';
                         <td class="fw-bold"><?= htmlspecialchars($c['fullname'] ?? '') ?></td>
                         <td><?= htmlspecialchars($c['email'] ?? '') ?></td>
                         <td><?= htmlspecialchars($c['phone'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($c['address'] ?? '') ?></td>
 
                         <td>
                             <?php if (($c['status'] ?? 0) == 1): ?>

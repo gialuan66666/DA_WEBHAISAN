@@ -1,5 +1,8 @@
 <?php
+require_once './config/Database.php';
 
+$database = new Database();
+$conn = $database->connect();
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -12,6 +15,8 @@ require_once './controllers/client/CheckoutController.php';
 require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
 require_once './controllers/admin/UserController.php';
+require_once './controllers/client/AuthController.php';
+
 
 $request = $_SERVER['REQUEST_URI'];
 // Xóa query string nếu có
@@ -62,6 +67,13 @@ switch ($page) {
 
         break;
 
+    case 'logout':
+        session_unset();
+        session_destroy();
+        header("Location: /login");
+        exit;
+
+
     case 'cart/add':
 
         $cartController = new CartController();
@@ -90,13 +102,26 @@ switch ($page) {
         break;
 
     case 'login':
-
-        include "view/page/client/login.php";
-
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController = new AuthController($conn);
+            $authController->login();
+        } else {
+            include "view/page/client/Auth/login.php";
+        }
         break;
-    case 'register':
 
-        include "view/page/client/register.php";
+    case 'register':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController = new AuthController($conn);
+            $authController->register();
+        } else {
+            include "view/page/client/Auth/register.php";
+        }
+        break;
+    case 'admin/orders':
+
+
+        include "view/page/admin/orders.php";
 
         break;
 
