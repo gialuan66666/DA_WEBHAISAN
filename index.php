@@ -121,7 +121,7 @@ switch ($page) {
     case 'admin/orders':
 
 
-        include "view/page/admin/orders.php";
+        include "view/page/admin/Orders/orders.php";
 
         break;
 
