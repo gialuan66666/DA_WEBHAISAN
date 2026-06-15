@@ -26,6 +26,32 @@ $request = trim($request, '/');
 // Nếu rỗng → home
 $page = $request ?: 'home';
 
+function isLoggedIn()
+{
+    return isset($_SESSION['user']);
+}
+
+function isAdmin()
+{
+    return isset($_SESSION['user']) && isset($_SESSION['user']['role']) && $_SESSION['user']['role'] == 1;
+}
+
+if (strpos($page, 'admin') === 0 || in_array($page, ['user_edit', 'user_update', 'user_delete'])) {
+    if (!isAdmin()) {
+        $_SESSION['error'] = "Bạn không có quyền truy cập vào khu vực quản trị!";
+        header("Location: /");
+        exit;
+    }
+}
+
+if (in_array($page, ['login', 'register'])) {
+    if (isLoggedIn()) {
+        header("Location: /");
+        exit;
+    }
+}
+
+
 
 switch ($page) {
 
