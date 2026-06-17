@@ -52,7 +52,6 @@ if (in_array($page, ['login', 'register'])) {
 }
 
 
-
 switch ($page) {
 
     // CLIENT
