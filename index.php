@@ -16,6 +16,7 @@ require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
 require_once './controllers/admin/UserController.php';
 require_once './controllers/client/AuthController.php';
+require_once './controllers/admin/CategoriesController.php';
 
 
 $request = $_SERVER['REQUEST_URI'];
@@ -183,8 +184,28 @@ switch ($page) {
 
 
     case 'admin/categories':
-        include "view/page/admin/categories.php";
+        $categoriesController = new CategoriesController();
+        $categoriesController->store(); // xử lý POST thêm mới nếu có
+        include "view/page/admin/Categories/categories.php";
         break;
+
+    case 'admin/categories/update':
+    case 'admin/categories_update':
+        $categoriesController = new CategoriesController();
+        $categoriesController->update();
+        break;
+
+    case 'admin/categories/delete':
+    case 'admin/categories_delete':
+        $categoriesController = new CategoriesController();
+        $categoriesController->destroy();
+        break;
+
+
+
+
+
+
 
 
     case 'admin/products':
