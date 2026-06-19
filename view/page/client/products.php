@@ -5,28 +5,65 @@ require_once 'config/database.php';
 $db = new Database();
 $conn = $db->connect();
 
-$sql = "SELECT * FROM products";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-
-$products = $stmt->fetchAll();
-
 $pageTitle = 'Sản phẩm - SeaFresh';
 
 require_once './view/layouts/client/header.php';
 
-$keyword = $_GET['q'] ?? '';
+$keyword = trim($_GET['q'] ?? '');
+$categoryId = (int)($_GET['category_id'] ?? 0);
+$minPrice = $_GET['min_price'] ?? '';
+$maxPrice = $_GET['max_price'] ?? '';
+$sort = $_GET['sort'] ?? 'newest';
 
-$displayProducts = $products;
+$categoriesStmt = $conn->prepare("SELECT id, name FROM categories ORDER BY name ASC");
+$categoriesStmt->execute();
+$categories = $categoriesStmt->fetchAll();
+
+$where = [];
+$params = [];
 
 if ($keyword !== '') {
-    $displayProducts = array_filter(
-        $products,
-        function ($p) use ($keyword) {
-            return stripos($p['name'], $keyword) !== false;
-        }
-    );
+    $where[] = "p.name LIKE :keyword";
+    $params[':keyword'] = '%' . $keyword . '%';
 }
+
+if ($categoryId > 0) {
+    $where[] = "p.category_id = :category_id";
+    $params[':category_id'] = $categoryId;
+}
+
+if ($minPrice !== '' && is_numeric($minPrice)) {
+    $where[] = "p.price >= :min_price";
+    $params[':min_price'] = (float)$minPrice;
+}
+
+if ($maxPrice !== '' && is_numeric($maxPrice)) {
+    $where[] = "p.price <= :max_price";
+    $params[':max_price'] = (float)$maxPrice;
+}
+
+$orderBy = match ($sort) {
+    'price_asc' => 'p.price ASC',
+    'price_desc' => 'p.price DESC',
+    'name_asc' => 'p.name ASC',
+    default => 'p.id DESC',
+};
+
+$sql = "
+    SELECT p.*, c.name AS category_name
+    FROM products p
+    LEFT JOIN categories c ON c.id = p.category_id
+";
+
+if (!empty($where)) {
+    $sql .= " WHERE " . implode(" AND ", $where);
+}
+
+$sql .= " ORDER BY " . $orderBy;
+
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+$displayProducts = $stmt->fetchAll();
 
 ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -79,9 +116,53 @@ if ($keyword !== '') {
                         class="form-control mb-3"
                         placeholder="Tên sản phẩm...">
 
+                    <label class="form-label">Danh mục</label>
+                    <select name="category_id" class="form-select mb-3">
+                        <option value="0">Tất cả danh mục</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?= $category['id'] ?>" <?= $categoryId === (int)$category['id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($category['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <label class="form-label">Khoảng giá</label>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <input
+                                type="number"
+                                min="0"
+                                name="min_price"
+                                value="<?= htmlspecialchars($minPrice) ?>"
+                                class="form-control"
+                                placeholder="Từ">
+                        </div>
+                        <div class="col-6">
+                            <input
+                                type="number"
+                                min="0"
+                                name="max_price"
+                                value="<?= htmlspecialchars($maxPrice) ?>"
+                                class="form-control"
+                                placeholder="Đến">
+                        </div>
+                    </div>
+
+                    <label class="form-label">Sắp xếp</label>
+                    <select name="sort" class="form-select mb-3">
+                        <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Mới nhất</option>
+                        <option value="price_asc" <?= $sort === 'price_asc' ? 'selected' : '' ?>>Giá thấp đến cao</option>
+                        <option value="price_desc" <?= $sort === 'price_desc' ? 'selected' : '' ?>>Giá cao đến thấp</option>
+                        <option value="name_asc" <?= $sort === 'name_asc' ? 'selected' : '' ?>>Tên A-Z</option>
+                    </select>
+
                     <button class="btn btn-primary w-100">
                         Lọc sản phẩm
                     </button>
+
+                    <a href="/product" class="btn btn-outline-secondary w-100 mt-2">
+                        Xóa bộ lọc
+                    </a>
                 </form>
             </div>
         </div>
@@ -121,7 +202,7 @@ if ($keyword !== '') {
                             <div class="p-3">
 
                                 <p class="text-muted small mb-1">
-                                    Hải sản tươi sống
+                                    <?= htmlspecialchars($product['category_name'] ?? 'Hải sản tươi sống') ?>
                                 </p>
 
                                 <h5 class="fw-bold mb-2">

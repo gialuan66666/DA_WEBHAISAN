@@ -5,7 +5,7 @@ require_once './models/CartModels.php';
 
 class CartController
 {
-    private int $userId = 1;
+    private int $userId;
     private CartModel $cartModel;
 
     public function __construct()
@@ -13,6 +13,14 @@ class CartController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        if (empty($_SESSION['user']['id'])) {
+            $_SESSION['error'] = "Vui lòng đăng nhập để sử dụng giỏ hàng";
+            header("Location: /login");
+            exit;
+        }
+
+        $this->userId = (int) $_SESSION['user']['id'];
 
         $database = new Database();
         $db = $database->connect();
@@ -44,6 +52,7 @@ class CartController
             $quantity = 1;
         }
 
+        unset($_SESSION['buy_now']);
         $this->cartModel->addToCart($this->userId, $productId, $quantity);
 
         header('Location: /cart');
@@ -89,6 +98,33 @@ class CartController
 
         if ($cartId > 0) {
             $this->cartModel->removeItem($cartId, $this->userId);
+        }
+
+        header('Location: /cart');
+        exit;
+    }
+
+    public function update(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /cart');
+            exit;
+        }
+
+        $cartId = (int)($_POST['cart_id'] ?? 0);
+        $quantity = (int)($_POST['quantity'] ?? 1);
+        $action = $_POST['action'] ?? '';
+
+        if ($action === 'increase') {
+            $quantity++;
+        }
+
+        if ($action === 'decrease') {
+            $quantity--;
+        }
+
+        if ($cartId > 0) {
+            $this->cartModel->updateQuantity($cartId, $this->userId, $quantity);
         }
 
         header('Location: /cart');

@@ -16,6 +16,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 document.querySelectorAll('.quantity-box').forEach(box => {
+    if (box.dataset.manualQty === 'true') return;
     const input = box.querySelector('.qty-input');
     const plus = box.querySelector('.plus');
     const minus = box.querySelector('.minus');

@@ -90,7 +90,7 @@ switch ($page) {
         $cartController = new CartController();
         $cartItems = $cartController->index();
 
-        include "view/page/client/cart.php";
+        include "view/page/client/Cart/cart.php";
 
         break;
 
@@ -114,6 +114,12 @@ switch ($page) {
 
         break;
 
+    case 'cart/update':
+        $cartController = new CartController();
+        $cartController->update();
+
+        break;
+
     case 'buy-now':
         $cartController = new CartController();
         $cartController->buyNow();
@@ -124,7 +130,13 @@ switch ($page) {
         $checkoutController = new CheckoutController();
         $checkoutItems = $checkoutController->index();
 
-        include "view/page/client/checkout.php";
+        include "view/page/client/Cart/checkout.php";
+
+        break;
+
+    case 'checkout/order':
+        $checkoutController = new CheckoutController();
+        $checkoutController->order();
 
         break;
 

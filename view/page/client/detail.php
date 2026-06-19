@@ -20,7 +20,7 @@ require_once './view/layouts/client/header.php';
             <p class="old-price fs-5"><?= priceFormat($product['old_price']) ?></p>
             <p class="new-price display-6"><?= priceFormat($product['price']) ?></p>
             <p class="lead"><?= $product['desc'] ?></p>
-            <div class="quantity-box mb-4">
+            <div class="quantity-box mb-4" data-manual-qty="true">
                 <button type="button" class="qty-btn minus">-</button>
                 <input type="text" value="1" class="qty-input">
                 <button type="button" class="qty-btn plus">+</button>
@@ -56,8 +56,10 @@ require_once './view/layouts/client/header.php';
                 const buyQty = document.getElementById('buyQty');
 
                 function syncQty() {
-                    cartQty.value = qtyInput.value;
-                    buyQty.value = qtyInput.value;
+                    const quantity = Math.max(1, Number(qtyInput.value) || 1);
+                    qtyInput.value = quantity;
+                    cartQty.value = quantity;
+                    buyQty.value = quantity;
                 }
 
                 plusBtn.addEventListener('click', function() {
@@ -72,6 +74,8 @@ require_once './view/layouts/client/header.php';
 
                     syncQty();
                 });
+
+                qtyInput.addEventListener('input', syncQty);
             </script>
         </div>
     </div>

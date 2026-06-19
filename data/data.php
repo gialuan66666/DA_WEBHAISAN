@@ -17,7 +17,7 @@ function fetchAllSafe(PDO $conn, string $sql): array
 
 function priceFormat($price): string
 {
-    return number_format((float) $price, 0, ',', '.') . 'd';
+    return number_format((float) $price, 0, ',', '.') . 'đ';
 }
 
 function getProductById(array $products, $id): ?array

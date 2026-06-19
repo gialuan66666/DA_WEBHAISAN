@@ -44,7 +44,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <input class="form-control rounded-start-pill" type="search" name="q" placeholder="Tìm hải sản...">
                         <button class="btn btn-blue rounded-end-pill"><i class="fa-solid fa-search"></i></button>
                     </form>
-
+                    <a href="/cart"
+    class="btn btn-outline-primary rounded-pill me-lg-3 mb-3 mb-lg-0 position-relative">
+    <i class="fa-solid fa-cart-shopping"></i>
+</a>
                     <?php if (!empty($_SESSION['user'])): ?>
                         <div class="dropdown">
                             <a class="btn btn-outline-primary rounded-pill dropdown-toggle d-flex align-items-center gap-2"
