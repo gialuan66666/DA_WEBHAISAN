@@ -3,6 +3,8 @@ $pageTitle = 'Chi tiết sản phẩm - SeaFresh';
 require_once './data/data.php';
 $id = $_GET['id'] ?? 1;
 $product = getProductById($products, $id);
+$commentModel = new CommentModel($conn);
+$comments = $commentModel->getByProduct($product['id']);
 require_once './view/layouts/client/header.php';
 ?>
 
@@ -73,6 +75,68 @@ require_once './view/layouts/client/header.php';
             </script>
         </div>
     </div>
+</section>
+
+<section class="container pb-5">
+
+    <div class="card shadow-sm p-4 mb-4">
+        <h5 class="fw-bold mb-3">Đánh giá sản phẩm</h5>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?= $_SESSION['error'];
+                                            unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success"><?= $_SESSION['success'];
+                                                unset($_SESSION['success']); ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['user'])): ?>
+            <form action="/comment" method="POST">
+                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+
+                <textarea name="content"
+                    class="form-control mb-3"
+                    rows="3"
+                    placeholder="Nhập đánh giá của bạn..." required></textarea>
+
+                <button type="submit" class="btn btn-success rounded-pill px-4">
+                    Gửi đánh giá
+                </button>
+            </form>
+        <?php else: ?>
+            <p class="text-danger">Bạn cần <a href="/login">đăng nhập</a> để bình luận</p>
+        <?php endif; ?>
+    </div>
+
+
+    <div class="card shadow-sm p-4">
+        <h5 class="fw-bold mb-3">Đánh giá từ khách hàng</h5>
+
+        <?php if (!empty($comments)): ?>
+            <?php foreach ($comments as $c): ?>
+                <div class="border-bottom pb-3 mb-3">
+                    <strong><?= htmlspecialchars($c['fullname']) ?></strong>
+
+                    <div class="text-warning">
+                        <?php for ($i = 0; $i < ($c['rating'] ?? 5); $i++): ?>
+                            ★
+                        <?php endfor; ?>
+                    </div>
+
+                    <p class="mb-1"><?= htmlspecialchars($c['comment_text']) ?></p>
+
+                    <small class="text-muted">
+                        <?= $c['date'] ?? '' ?>
+                    </small>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-muted">Chưa có đánh giá nào</p>
+        <?php endif; ?>
+    </div>
+
 </section>
 
 <section class="container pb-5">

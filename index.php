@@ -10,6 +10,8 @@ session_start();
 //CLIENT
 require_once './controllers/client/CartController.php';
 require_once './controllers/client/CheckoutController.php';
+require_once './controllers/client/CommentController.php';
+
 
 //ADMIN
 require_once './controllers/admin/OrderController.php';
@@ -216,6 +218,11 @@ switch ($page) {
     case 'admin/orders/update-status':
         $orderController = new OrderController();
         $orderController->updateStatus();
+        break;
+
+    case 'comment':
+        $controller = new CommentController($conn);
+        $controller->store();
         break;
     default:
         echo "<h1>404</h1>";
