@@ -2,7 +2,7 @@
 
 require_once './config/database.php';
 require_once './models/CartModels.php';
-require_once './models/ProductsModels.php';
+require_once './models/productsModels.php';
 require_once './models/OrderModels.php';
 
 class CheckoutController
