@@ -141,4 +141,29 @@ class ProductsModels
             ':id' => $id
         ]);
     }
+    public function getTotalProducts(): array
+{
+    $sql = "SELECT COUNT(*) AS total_products FROM products";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function getLowStockProducts(int $limit = 5): array
+{
+    $sql = "
+        SELECT id, name, image, quantity
+        FROM products
+        ORDER BY quantity ASC
+        LIMIT :limit
+    ";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

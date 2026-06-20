@@ -14,6 +14,7 @@ require_once './controllers/client/CommentController.php';
 
 
 //ADMIN
+require_once './controllers/admin/DashboardController.php';
 require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
 require_once './controllers/admin/UserController.php';
@@ -166,10 +167,16 @@ switch ($page) {
 
     case 'admin':
 
+
     case 'admin/dashboard':
 
-        include "view/page/admin/dashboard.php";
 
+        $dashboardController = new DashboardController();
+        $data = $dashboardController->index();
+
+        extract($data);
+
+        require_once './view/page/admin/dashboard.php';
         break;
 
 

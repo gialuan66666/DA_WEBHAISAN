@@ -145,4 +145,43 @@ public function updateOrderStatus(int $id, string $status): bool
         ':order_status' => $status
     ]);
 }
+public function getRevenue(): array
+{
+    $sql = "
+        SELECT COALESCE(SUM(total), 0) AS revenue
+        FROM orders
+        WHERE order_status = 'completed'
+    ";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function getTotalOrders(): array
+{
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function getRecentOrders(int $limit = 5): array
+{
+    $sql = "
+        SELECT *
+        FROM orders
+        ORDER BY id DESC
+        LIMIT :limit
+    ";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
