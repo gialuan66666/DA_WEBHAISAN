@@ -195,6 +195,12 @@ switch ($page) {
         $userController->destroy();
         break;
 
+    case 'user_show':
+        $userController = new UserController();
+        $user = $userController->show((int)$_GET['id']);
+         include "view/page/admin/Users/user_show.php";
+        break;
+
 
     case 'admin/categories':
         include "view/page/admin/categories.php";

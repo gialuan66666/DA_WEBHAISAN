@@ -38,7 +38,7 @@ require_once './view/layouts/admin/header.php';
 
                         <td class="text-end d-flex justify-content-end gap-2">
 
-                            <a href="?page=user_show&id=<?= $c['id'] ?>"
+                            <a href="/user_show?id=<?= $c['id'] ?>"
                                 class="btn btn-sm btn-outline-info rounded-pill">
                                 Xem
                             </a>
