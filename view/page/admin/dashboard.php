@@ -121,9 +121,19 @@ require_once './view/layouts/admin/header.php';
                                 </td>
 
                                 <td>
-                                    <span class="badge-soft">
-                                        <?= $o['order_status'] ?>
-                                    </span>
+                                                                    <span class="badge-soft">
+                                    <?php
+                                    $statusText = [
+                                        'pending'   => 'Chờ xác nhận',
+                                        'confirmed' => 'Đã xác nhận',
+                                        'shipping'  => 'Đang giao',
+                                        'completed' => 'Hoàn tất',
+                                        'cancelled' => 'Đã hủy'
+                                    ];
+                                    ?>
+
+                                    <?= $statusText[$o['order_status']] ?? $o['order_status'] ?>
+                                </span>
                                 </td>
 
                                 <td>

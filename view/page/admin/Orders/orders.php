@@ -14,7 +14,7 @@ require_once './component/notifi.php';
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h5 class="fw-bold mb-0">Danh sách đơn hàng</h5>
-        <button class="btn btn-blue rounded-pill">Xuất Excel</button>
+        <!-- <button class="btn btn-blue rounded-pill">Xuất Excel</button> -->
     </div>
 
     <div class="table-responsive">
