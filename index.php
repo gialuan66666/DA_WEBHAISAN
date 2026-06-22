@@ -14,6 +14,7 @@ require_once './controllers/client/CommentController.php';
 
 
 //ADMIN
+ require_once './controllers/client/ContactController.php';
 require_once './controllers/admin/DashboardController.php';
 require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
@@ -75,6 +76,13 @@ switch ($page) {
     case 'contact':
 
         include "view/page/client/contact.php";
+
+        break;
+    case 'contact/send':
+       
+
+        $contactController = new ContactController();
+        $contactController->send();
 
         break;
 

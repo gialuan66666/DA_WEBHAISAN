@@ -3,7 +3,12 @@ $pageTitle = 'Liên hệ - SeaFresh';
 require_once './view/layouts/client/header.php';
 ?>
 
-<section class="page-banner"><div class="container"><h1>Liên hệ</h1><p>Gửi thông tin để SeaFresh tư vấn nhanh cho bạn.</p></div></section>
+<section class="page-banner">
+    <div class="container">
+        <h1>Liên hệ</h1>
+        <p>Gửi thông tin để SeaFresh tư vấn nhanh cho bạn.</p>
+    </div>
+</section>
 
 <section class="container py-5">
     <div class="row g-4">
@@ -19,12 +24,28 @@ require_once './view/layouts/client/header.php';
         <div class="col-lg-7">
             <div class="form-box">
                 <h3 class="fw-bold text-blue mb-4">Gửi tin nhắn</h3>
-                <form class="row g-3">
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder="Họ tên"></div>
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder="Số điện thoại"></div>
-                    <div class="col-12"><input type="email" class="form-control" placeholder="Email"></div>
-                    <div class="col-12"><textarea class="form-control" rows="5" placeholder="Nội dung cần tư vấn"></textarea></div>
-                    <div class="col-12"><button type="button" class="btn btn-blue rounded-pill px-4">Gửi liên hệ</button></div>
+                <form class="row g-3" action="/contact/send" method="POST">
+                    <div class="col-md-6">
+                        <input type="text" name="fullname" class="form-control" placeholder="Họ tên">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" name="phone" class="form-control" placeholder="Số điện thoại">
+                    </div>
+
+                    <div class="col-12">
+                        <input type="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+
+                    <div class="col-12">
+                        <textarea name="message" class="form-control" rows="5" placeholder="Nội dung cần tư vấn"></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-blue rounded-pill px-4">
+                            Gửi liên hệ
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
