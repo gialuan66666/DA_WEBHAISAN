@@ -19,6 +19,8 @@ require_once './controllers/admin/OrderController.php';
 require_once './controllers/admin/ProductController.php';
 require_once './controllers/admin/UserController.php';
 require_once './controllers/client/AuthController.php';
+require_once './controllers/admin/CategoryController.php';
+
 
 
 $request = $_SERVER['REQUEST_URI'];
@@ -205,14 +207,28 @@ switch ($page) {
     case 'user_show':
         $userController = new UserController();
         $user = $userController->show((int)$_GET['id']);
-         include "view/page/admin/Users/user_show.php";
+        include "view/page/admin/Users/user_show.php";
         break;
 
 
     case 'admin/categories':
-        include "view/page/admin/categories.php";
-        break;
+        $controller = new CategoryController();
 
+        $method = $_SERVER['REQUEST_METHOD'];
+        $action = $_POST['action'] ?? $_GET['action'] ?? null; // ✅ FIX
+
+        if ($method === 'POST') {
+            match ($action) {
+                'store' => $controller->store(),
+                'update' => $controller->update(),
+                'delete' => $controller->delete(),
+                default => header('Location: /admin/categories')
+            };
+        } else {
+            $categories = $controller->index();
+            include "view/page/admin/categories.php";
+        }
+        break;
 
     case 'admin/products':
 
